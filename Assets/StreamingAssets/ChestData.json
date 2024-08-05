@@ -1,0 +1,19 @@
+﻿{
+  "Chests": [
+    {
+      "reward_type": "gold",
+      "amount": 1000,
+      "receive_time": "2024-08-09T23:30:00Z"
+    },
+    {
+      "reward_type": "silver",
+      "amount": 100,
+      "receive_time": "2024-08-09T23:40:00Z"
+    },
+    {
+      "reward_type": "wood",
+      "amount": 10,
+      "receive_time": "2024-08-09T23:50:00Z"
+    }
+  ]
+}
