@@ -22,6 +22,7 @@ namespace DefaultNamespace
         {
             if (_gameRepository.TryGetData(out List<DateTime> data))
             {
+                Debug.Log("пустой список");
                 for (int i = 1; i < data.Count; i++)
                 {
                     TimeSpan timeIn = data[i] - data[i - 1];

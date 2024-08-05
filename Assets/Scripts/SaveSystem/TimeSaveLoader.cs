@@ -26,6 +26,7 @@ namespace SaveSystem
 
         void IInitializable.Initialize()
         {
+            Load();
             _timeManagerProvider.Initialize();
             _timeManagerProvider.OnTimeReceived += AddTime;
         }

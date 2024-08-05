@@ -46,6 +46,8 @@ namespace SaveSystem
         {
             string serializedData = JsonConvert.SerializeObject(_storage);
             File.WriteAllText(_filePath,serializedData);
+            
+            Debug.Log("Saved");
         }
 
         public void LoadState()
@@ -54,6 +56,8 @@ namespace SaveSystem
 
             string savedStorage = File.ReadAllText(_filePath);
             _storage = JsonConvert.DeserializeObject<Dictionary<Type,string>>(savedStorage);
+            
+            Debug.Log("Loaded");
         }
     }
 }

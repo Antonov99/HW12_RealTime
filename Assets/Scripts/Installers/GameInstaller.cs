@@ -11,7 +11,7 @@ public class GameInstaller : MonoInstaller
         Container.Bind<ChestLoader>().AsSingle().NonLazy();
         
         Container.BindInterfacesTo<TimeSaveLoader>().AsSingle().NonLazy();
-        Container.BindInterfacesTo<GameRepository>().AsCached().NonLazy();
+        Container.BindInterfacesTo<GameRepository>().AsSingle().NonLazy();
 
         Container.Bind<TimeManagerProvider>().AsSingle().NonLazy();
     }
