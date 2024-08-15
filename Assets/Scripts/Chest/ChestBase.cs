@@ -3,6 +3,7 @@ using System.Globalization;
 using DefaultNamespace;
 using Reward;
 using UnityEngine;
+using Zenject;
 
 namespace Chest
 {
@@ -16,10 +17,12 @@ namespace Chest
         private ChestModel _chestModel;
 
         private ServerTimeManager _serverTimeManager;
+        private MoneyStorage _moneyStorage;
 
-        public void Initialize(ChestInfo chest, ServerTimeManager serverTimeManager)
+        public void Initialize(ChestInfo chest, ServerTimeManager serverTimeManager,MoneyStorage moneyStorage)
         {
             _serverTimeManager = serverTimeManager;
+            _moneyStorage = moneyStorage;
             
             chestAnimation.Close();
             _chestView = GetComponent<ChestView>();
@@ -41,9 +44,10 @@ namespace Chest
             throw new Exception("convert");
         }
 
-        private void OnChestOpened(RewardData obj)
+        private void OnChestOpened(RewardData reward)
         {
             chestAnimation.Open();
+            _moneyStorage.GetReward(reward);
         }
 
         private void OnDestroy()

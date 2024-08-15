@@ -11,13 +11,13 @@ namespace SaveSystem
     public sealed class GameRepository:IGameRepository
     {
         private Dictionary<Type, string> _storage=new();
-        private const string _FILE_NAME = "Storage.json";
+        private const string _FILE_NAME = "/Storage.json";
         private readonly string _filePath = Application.persistentDataPath + _FILE_NAME;
 
         public void SetData<T>(T data)
         {
             Type dataType = typeof(T);
-            string serializedData = JsonUtility.ToJson(data);
+            string serializedData = JsonConvert.SerializeObject(data);
             _storage[dataType] = serializedData;
         }
 
@@ -25,7 +25,7 @@ namespace SaveSystem
         {
             Type dataType = typeof(T);
             string serializedData = _storage[dataType];
-            T deserializedData = JsonUtility.FromJson<T>(serializedData);
+            T deserializedData =JsonConvert.DeserializeObject<T>(serializedData);
 
             return deserializedData;
         }
@@ -35,7 +35,7 @@ namespace SaveSystem
             Type dataType = typeof(T);
             if (_storage.TryGetValue(dataType, out string serializedData))
             {
-                data = JsonUtility.FromJson<T>(serializedData);
+                data = JsonConvert.DeserializeObject<T>(serializedData);
                 return true;
             }
             data = default;
@@ -55,6 +55,7 @@ namespace SaveSystem
             if (!File.Exists(_filePath)) return;
 
             string savedStorage = File.ReadAllText(_filePath);
+            
             _storage = JsonConvert.DeserializeObject<Dictionary<Type,string>>(savedStorage);
             
             Debug.Log("Loaded");

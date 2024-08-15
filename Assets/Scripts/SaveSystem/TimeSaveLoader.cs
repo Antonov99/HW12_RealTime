@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using DefaultNamespace;
 using JetBrains.Annotations;
-using UnityEngine;
 using Zenject;
 
 namespace SaveSystem
@@ -15,7 +12,7 @@ namespace SaveSystem
         private ServerTimeManager _serverTimeManager;
         private TimeManagerProvider _timeManagerProvider;
 
-        private readonly List<DateTime> _dates = new();
+        private (DateTime, DateTime) _dates;
 
         [Inject]
         public void Construct(IGameRepository gameRepository,  TimeManagerProvider timeManagerProvider)
@@ -28,19 +25,24 @@ namespace SaveSystem
         {
             Load();
             _timeManagerProvider.Initialize();
-            _timeManagerProvider.OnTimeReceived += AddTime;
+            _timeManagerProvider.OnTimeReceived += AddEnterTime;
         }
 
         void IDisposable.Dispose()
         {
-            AddTime(_timeManagerProvider.GetExitTime());
-            _timeManagerProvider.OnTimeReceived -= AddTime;
+            AddExitTime(_timeManagerProvider.GetExitTime());
+            _timeManagerProvider.OnTimeReceived -= AddEnterTime;
             Save(_dates);
         }
 
-        private void AddTime(DateTime time)
+        private void AddEnterTime(DateTime time)
         {
-            _dates.Add(time);
+            _dates.Item1 = time;
+        }
+
+        private void AddExitTime(DateTime time)
+        {
+            _dates.Item2 = time;
         }
 
         public void Save<T>(T data)

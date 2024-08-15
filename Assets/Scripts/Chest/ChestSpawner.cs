@@ -14,12 +14,14 @@ namespace Chest
         
         private ChestLoader _chestLoader;
         private ServerTimeManager _serverTimeManager;
+        private MoneyStorage _moneyStorage;
 
         [Inject]
-        public void Construct(ChestLoader chestLoader, ServerTimeManager serverTimeManager)
+        public void Construct(ChestLoader chestLoader, ServerTimeManager serverTimeManager,MoneyStorage moneyStorage)
         {
             _chestLoader = chestLoader;
             _serverTimeManager = serverTimeManager;
+            _moneyStorage = moneyStorage;
         }
 
         private void Start()
@@ -30,7 +32,7 @@ namespace Chest
             {
                 var chest = chestCollection.chests[i];
                 ChestBase chestBase = Instantiate(chestBasePrefab, spawnPoints[i]);
-                chestBase.Initialize(chest, _serverTimeManager);
+                chestBase.Initialize(chest, _serverTimeManager,_moneyStorage);
             }
         }
     }

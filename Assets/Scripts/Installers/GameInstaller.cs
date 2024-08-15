@@ -14,5 +14,7 @@ public class GameInstaller : MonoInstaller
         Container.BindInterfacesTo<GameRepository>().AsSingle().NonLazy();
 
         Container.Bind<TimeManagerProvider>().AsSingle().NonLazy();
+        
+        Container.BindInterfacesAndSelfTo<MoneyStorage>().AsSingle().NonLazy();
     }
 }

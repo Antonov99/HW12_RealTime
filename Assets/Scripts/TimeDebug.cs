@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using SaveSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -20,14 +19,11 @@ namespace DefaultNamespace
         [Button]
         private void DebugTime()
         {
-            if (_gameRepository.TryGetData(out List<DateTime> data))
+            if (_gameRepository.TryGetData(out (DateTime,DateTime) data))
             {
-                Debug.Log("пустой список");
-                for (int i = 1; i < data.Count; i++)
-                {
-                    TimeSpan timeIn = data[i] - data[i - 1];
-                    Debug.Log($"Время входа: {data[i - 1]} Время выхода:{data[i]} Прошло времени {timeIn}");
-                }
+                    TimeSpan timeIn = data.Item2-data.Item1;
+                    Debug.Log($"Время входа: {data.Item1} Время выхода:{data.Item2} Прошло времени {timeIn}");
+                
             }
         }
     }
